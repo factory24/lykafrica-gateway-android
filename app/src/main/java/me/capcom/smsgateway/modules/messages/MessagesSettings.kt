@@ -19,7 +19,9 @@ class MessagesSettings(
     enum class SimSelectionMode {
         OSDefault,
         RoundRobin,
-        Random
+        Random,
+        // [lyk] One SIM chosen in settings (dual-SIM phones); a per-message simNumber still wins.
+        Fixed,
     }
 
     enum class ProcessingOrder {
@@ -54,6 +56,10 @@ class MessagesSettings(
 
     val simSelectionMode: SimSelectionMode
         get() = storage.get<SimSelectionMode>(SIM_SELECTION_MODE) ?: SimSelectionMode.OSDefault
+
+    /** [lyk] 0-based SIM slot used when [simSelectionMode] is Fixed. */
+    val defaultSimSlot: Int?
+        get() = storage.get<Int>(DEFAULT_SIM_SLOT)
 
     val logLifetimeDays: Int?
         get() = storage.get<Int?>(LOG_LIFETIME_DAYS)?.takeIf { it > 0 }
@@ -160,6 +166,7 @@ class MessagesSettings(
         private const val LIMIT_VALUE = "limit_value"
 
         private const val SIM_SELECTION_MODE = "sim_selection_mode"
+        private const val DEFAULT_SIM_SLOT = "default_sim_slot"
 
         private const val LOG_LIFETIME_DAYS = "log_lifetime_days"
 
@@ -177,6 +184,7 @@ class MessagesSettings(
             LIMIT_PERIOD to limitPeriod.name,
             LIMIT_VALUE to limitValue,
             SIM_SELECTION_MODE to simSelectionMode.name,
+            DEFAULT_SIM_SLOT to defaultSimSlot,
             LOG_LIFETIME_DAYS to logLifetimeDays,
             PROCESSING_ORDER to processingOrder.name,
             WORK_HOURS_ENABLED to workHoursEnabled,
@@ -244,6 +252,14 @@ class MessagesSettings(
 
                     storage.set(key, newValue.name)
 
+                    changed
+                }
+
+                DEFAULT_SIM_SLOT -> {
+                    val newValue = value?.toString()?.toFloat()?.toInt()
+                    if (newValue != null && newValue < 0) throw IllegalArgumentException("SIM slot must be >= 0")
+                    val changed = this.defaultSimSlot != newValue
+                    storage.set(key, newValue?.toString())
                     changed
                 }
 

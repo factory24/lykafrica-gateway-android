@@ -17,11 +17,13 @@
         <item>OS default</item>
         <item>Round robin</item>
         <item>Random</item>
+        <item>One SIM (choose below)</item>
     </string-array>
     <string-array name="sim_selection_modes_values">
         <item>OSDefault</item>
         <item>RoundRobin</item>
         <item>Random</item>
+        <item>Fixed</item>
     </string-array>
     <string-array name="processing_order_titles">
         <item>LIFO (newer messages first)</item>
