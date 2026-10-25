@@ -2,7 +2,6 @@
     <string name="address_is">%1$s</string>
     <string name="api_url_private_token_credentials_etc">API URL, private token, credentials, etc.</string>
     <string name="api_url">API URL</string>
-    <string name="app_name" translatable="false">SMSGate</string>
     <string name="app_version_build">App version (build)</string>
     <string name="automatic_key_rotation">Automatic key rotation</string>
     <string name="battery_optimization_already_disabled">Battery optimization already disabled</string>
@@ -215,4 +214,6 @@
     <string name="filter_mms_count">MMS (%1$d)</string>
     <string name="device_key">Device Key</string>
     <string name="device_keys_management">Device keys management</string>
+    <string name="sim_for_sending">SIM for sending</string>
+    <string name="no_active_sim">No active SIM (allow phone access)</string>
 </resources>

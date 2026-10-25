@@ -489,6 +489,7 @@ class MessagesService(
             MessagesSettings.SimSelectionMode.OSDefault -> null
             MessagesSettings.SimSelectionMode.RoundRobin -> simSlots[(id % simSlots.size).toInt()]
             MessagesSettings.SimSelectionMode.Random -> simSlots.random()
+            MessagesSettings.SimSelectionMode.Fixed -> settings.defaultSimSlot?.takeIf { it in simSlots }
         }
     }
 

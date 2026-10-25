@@ -4,7 +4,9 @@ import android.app.TimePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
+import androidx.preference.DropDownPreference
 import androidx.preference.EditTextPreference
+import me.capcom.smsgateway.helpers.SubscriptionsHelper
 import androidx.preference.Preference
 import me.capcom.smsgateway.R
 
@@ -32,6 +34,25 @@ class MessagesSettingsFragment : BasePreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.messages_preferences, rootKey)
+        bindSimChoices()
+    }
+
+    // [lyk] The active SIMs as "Carrier · number · SIM n"; shown only in the Fixed mode.
+    private fun bindSimChoices() {
+        val pref = findPreference<DropDownPreference>("messages.default_sim_slot") ?: return
+        val sims = SubscriptionsHelper.getActiveSimCards(requireContext()).sortedBy { it.slotIndex }
+        if (sims.isEmpty()) {
+            pref.entries = arrayOf(getString(R.string.no_active_sim))
+            pref.entryValues = arrayOf("")
+            pref.isEnabled = false
+        } else {
+            pref.entries = sims.map { s ->
+                listOfNotNull(s.carrierName, s.phoneNumber, "SIM ${s.simNumber}").joinToString(" · ")
+            }.toTypedArray()
+            pref.entryValues = sims.map { it.slotIndex.toString() }.toTypedArray()
+            if (pref.value == null) pref.value = sims.first().slotIndex.toString()
+        }
+        pref.isVisible = preferenceManager.sharedPreferences?.getString("messages.sim_selection_mode", "OSDefault") == "Fixed"
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -72,6 +93,10 @@ class MessagesSettingsFragment : BasePreferenceFragment() {
 
     private val onPreferenceChanged =
         SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "messages.sim_selection_mode") {
+                findPreference<DropDownPreference>("messages.default_sim_slot")?.isVisible =
+                    sharedPreferences?.getString(key, "OSDefault") == "Fixed"
+            }
             if (key == "messages.limit_period") {
                 findPreference<EditTextPreference>("messages.limit_value")?.isEnabled =
                     sharedPreferences?.getString(key, "Disabled") != "Disabled"

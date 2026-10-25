@@ -2,8 +2,14 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.devtools.ksp'
-    id 'com.google.gms.google-services'
+    id 'com.google.gms.google-services' apply false
 }
+
+// [lyk] Firebase only when a google-services.json is supplied (cloud mode); local/private-server modes don't need it.
+if (file('google-services.json').exists()) apply plugin: 'com.google.gms.google-services'
+
+// [lyk] Branding comes from the environment, never from source: GATEWAY_APP_ID, GATEWAY_APP_NAME.
+def brand = { String key, String fallback -> System.getenv(key) ?: (project.findProperty(key) ?: fallback) }
 
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas".toString())
@@ -13,7 +19,8 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "me.capcom.smsgateway"
+        applicationId brand("GATEWAY_APP_ID", "me.capcom.smsgateway")
+        resValue "string", "app_name", brand("GATEWAY_APP_NAME", "SMSGate")
         minSdk 21
         targetSdk 33
         versionCode 1
