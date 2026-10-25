@@ -1,7 +1,7 @@
 # FORK.md — Lyk Africa Gateway (Svara device provider)
 
 - **Upstream:** https://github.com/capcom6/android-sms-gateway (Apache-2.0, see LICENSE; NOTICE kept).
-- **Fork point:** upstream `master` at 4937893 (after v1.77.4), 2026-10-25. Remote `upstream` is set.
+- **Fork point:** upstream `master` at 4937893 (= v1.77.5), 2026-10-25. Remote `upstream` is set.
 - **Why a fork:** user decision 2026-10-24 (companies/svara/SUPPORT-BRIEF-2026-10-24.md, OWNAZ-90): SMS and call
   features through the user's own phone and SIM, as Svara's `provider = device`.
 - **Rule:** rebase on upstream, never merge. Our changes are small and marked `[lyk]`; new features go in new
