@@ -44,6 +44,11 @@ class GatewaySettings(
     val privateToken: String?
         get() = storage.get<String>(PRIVATE_TOKEN)
 
+    /** [lyk] Name shown for this phone on the server, set on the connect screen (several phones per server). */
+    var deviceName: String?
+        get() = storage.get<String?>(DEVICE_NAME)?.takeIf { it.isNotBlank() }
+        set(value) = storage.set(DEVICE_NAME, value)
+
     val notificationChannel: NotificationChannel
         get() = storage.get<NotificationChannel>(NOTIFICATION_CHANNEL) ?: NotificationChannel.AUTO
 
@@ -52,6 +57,7 @@ class GatewaySettings(
         private const val ENABLED = "ENABLED"
         private const val FCM_TOKEN = "fcm_token"
 
+        private const val DEVICE_NAME = "lyk_device_name"
         private const val CLOUD_URL = "cloud_url"
         private const val PRIVATE_TOKEN = "private_token"
         private const val NOTIFICATION_CHANNEL = "notification_channel"

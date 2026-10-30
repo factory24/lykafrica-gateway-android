@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import me.capcom.smsgateway.databinding.ActivityMainBinding
 import me.capcom.smsgateway.ui.HolderFragment
-import me.capcom.smsgateway.ui.HomeFragment
+import africa.lyk.gateway.ui.LykHomeFragment
 import me.capcom.smsgateway.ui.SettingsFragment
 import me.capcom.smsgateway.helpers.LocaleHelper
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> HomeFragment.newInstance()
+                0 -> LykHomeFragment.newInstance() // [lyk] simple home; upstream HomeFragment stays in the tree
                 1 -> HolderFragment.newInstance()
                 else -> SettingsFragment.newInstance()
             }

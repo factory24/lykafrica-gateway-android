@@ -136,7 +136,7 @@ class GatewayService(
         }
 
         try {
-            val deviceName = "${Build.MANUFACTURER}/${Build.PRODUCT}"
+            val deviceName = this.settings.deviceName ?: "${Build.MANUFACTURER}/${Build.PRODUCT}" // [lyk] name from the connect screen
             val simCards = SubscriptionsHelper.getActiveSimCards(context)
             val keyInfo = deviceService.ensureKey()
             val request = GatewayApi.DeviceRegisterRequest(
