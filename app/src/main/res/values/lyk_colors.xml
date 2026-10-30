@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lyk_ink">#FF0B2A30</color>
+    <color name="lyk_surface">#FF12383F</color>
+    <color name="lyk_surface_hi">#FF195059</color>
+    <color name="lyk_line">#FF24565F</color>
+    <color name="lyk_teal">#FF087F8C</color>
+    <color name="lyk_lime">#FFCCE879</color>
+    <color name="lyk_amber">#FFF2B84B</color>
+    <color name="lyk_text">#FFEAF4F2</color>
+    <color name="lyk_muted">#FF8FB3B6</color>
+    <color name="lyk_danger">#FFFF8A7A</color>
+    <color name="lyk_off">#FF5E8087</color>
+</resources>

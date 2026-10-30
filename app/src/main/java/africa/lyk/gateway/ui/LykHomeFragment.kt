@@ -12,14 +12,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.card.MaterialCardView
 import androidx.lifecycle.lifecycleScope
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import kotlinx.coroutines.launch
@@ -136,18 +136,23 @@ class LykHomeFragment : Fragment() {
         val ok = connected()
         binding.lykCardConnect.isVisible = !ok
 
-        val (title, sub, color) = when {
-            !ok -> Triple(getString(R.string.lyk_status_not_connected), getString(R.string.lyk_status_not_connected_sub), 0xFF9E9E9E.toInt())
-            serviceActive -> Triple(
-                getString(R.string.lyk_status_ready),
-                getString(R.string.lyk_status_ready_sub, gatewaySettings.deviceName ?: defaultName(), serverHost()),
-                0xFF2E9E5B.toInt()
-            )
-            else -> Triple(getString(R.string.lyk_status_stopped), getString(R.string.lyk_status_stopped_sub), 0xFFE0A100.toInt())
+        val state = when {
+            !ok -> DawnView.State.Offline
+            serviceActive -> DawnView.State.Ready
+            else -> DawnView.State.Stopped
         }
-        binding.lykStatusTitle.text = title
-        binding.lykStatusSubtitle.text = sub
-        binding.lykStatusDot.backgroundTintList = ColorStateList.valueOf(color)
+        binding.lykDawn.setState(state)
+        binding.lykStatusTitle.text = when (state) {
+            DawnView.State.Offline -> getString(R.string.lyk_status_not_connected)
+            DawnView.State.Ready -> getString(R.string.lyk_status_ready)
+            DawnView.State.Stopped -> getString(R.string.lyk_status_stopped)
+        }
+        binding.lykStatusSubtitle.text = when (state) {
+            DawnView.State.Offline -> getString(R.string.lyk_status_not_connected_sub)
+            DawnView.State.Ready -> getString(R.string.lyk_status_ready_sub, gatewaySettings.deviceName ?: defaultName(), serverHost())
+            DawnView.State.Stopped -> getString(R.string.lyk_status_stopped_sub)
+        }
+        styleServiceButton(serviceActive)
         binding.lykButtonService.isVisible = ok
         binding.lykButtonService.setText(if (serviceActive) R.string.lyk_stop else R.string.lyk_start)
         binding.lykButtonTest.isEnabled = ok && serviceActive
@@ -162,11 +167,26 @@ class LykHomeFragment : Fragment() {
         renderSims()
     }
 
+    private fun styleServiceButton(running: Boolean) {
+        val b = binding.lykButtonService
+        val lime = ContextCompat.getColor(requireContext(), R.color.lyk_lime)
+        val ink = ContextCompat.getColor(requireContext(), R.color.lyk_ink)
+        val text = ContextCompat.getColor(requireContext(), R.color.lyk_text)
+        val line = ContextCompat.getColor(requireContext(), R.color.lyk_line)
+        if (running) {
+            b.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+            b.setTextColor(text); b.strokeColor = ColorStateList.valueOf(line); b.strokeWidth = 2
+        } else {
+            b.backgroundTintList = ColorStateList.valueOf(lime)
+            b.setTextColor(ink); b.strokeWidth = 0
+        }
+    }
+
     private fun renderSims() {
         val sims = SubscriptionsHelper.getActiveSimCards(requireContext()).sortedBy { it.slotIndex }
-        val group = binding.lykSimGroup
-        group.setOnCheckedChangeListener(null)
-        group.removeAllViews()
+        val tiles = binding.lykSimTiles
+        tiles.removeAllViews()
+        binding.lykSimAuto.isVisible = false
 
         val hasPhonePermission = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.READ_PHONE_STATE
@@ -180,33 +200,45 @@ class LykHomeFragment : Fragment() {
         }
         if (sims.isEmpty()) return
 
+        // A single SIM is always the one that sends: store it so nothing depends on phone defaults.
+        if (sims.size == 1 && (messagesSettings.simSelectionMode != MessagesSettings.SimSelectionMode.Fixed ||
+                    messagesSettings.defaultSimSlot != sims.first().slotIndex)
+        ) {
+            messagesSettings.import(mapOf("sim_selection_mode" to "Fixed", "default_sim_slot" to sims.first().slotIndex))
+        }
+
         val fixed = messagesSettings.simSelectionMode == MessagesSettings.SimSelectionMode.Fixed
         val selectedSlot = if (fixed) messagesSettings.defaultSimSlot else null
+        val lime = ContextCompat.getColor(requireContext(), R.color.lyk_lime)
+        val line = ContextCompat.getColor(requireContext(), R.color.lyk_line)
+        val hi = ContextCompat.getColor(requireContext(), R.color.lyk_surface_hi)
+        val surface = ContextCompat.getColor(requireContext(), R.color.lyk_surface)
 
-        fun option(id: Int, text: String, checked: Boolean) = RadioButton(requireContext()).apply {
-            this.id = id
-            this.text = text
-            this.isChecked = checked
-            group.addView(this, RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT, RadioGroup.LayoutParams.WRAP_CONTENT))
+        sims.forEachIndexed { index, s ->
+            val tile = layoutInflater.inflate(R.layout.lyk_item_sim, tiles, false) as MaterialCardView
+            tile.findViewById<TextView>(R.id.lykSimNumeral).text = s.simNumber.toString()
+            tile.findViewById<TextView>(R.id.lykSimCarrier).text = s.carrierName ?: getString(R.string.lyk_sim_option, s.simNumber, "")
+            tile.findViewById<TextView>(R.id.lykSimPhone).text = s.phoneNumber ?: "—"
+            val chosen = selectedSlot == s.slotIndex
+            tile.strokeColor = if (chosen) lime else line
+            tile.strokeWidth = if (chosen) 4 else 2
+            tile.setCardBackgroundColor(if (chosen) hi else surface)
+            if (index == sims.lastIndex) (tile.layoutParams as ViewGroup.MarginLayoutParams).marginEnd = 0
+            if (sims.size > 1) tile.setOnClickListener {
+                messagesSettings.import(mapOf("sim_selection_mode" to "Fixed", "default_sim_slot" to s.slotIndex))
+                renderSims()
+            }
+            tiles.addView(tile)
         }
-
-        sims.forEach { s ->
-            val label = listOfNotNull(s.carrierName, s.phoneNumber).joinToString(" · ").ifEmpty { "—" }
-            option(SIM_ID_BASE + s.slotIndex, getString(R.string.lyk_sim_option, s.simNumber, label), selectedSlot == s.slotIndex)
-        }
-        if (sims.size > 1) option(AUTO_ID, getString(R.string.lyk_sim_auto), !fixed || selectedSlot == null)
-        else group.check(SIM_ID_BASE + sims.first().slotIndex)
-
-        group.setOnCheckedChangeListener { _, checkedId ->
-            val settings = if (checkedId >= SIM_ID_BASE)
-                mapOf("sim_selection_mode" to "Fixed", "default_sim_slot" to (checkedId - SIM_ID_BASE))
-            else
-                mapOf("sim_selection_mode" to "OSDefault", "default_sim_slot" to null)
-            messagesSettings.import(settings)
-        }
-        // A single SIM is always the one that sends: store it so nothing depends on phone defaults.
-        if (sims.size == 1 && selectedSlot != sims.first().slotIndex) {
-            messagesSettings.import(mapOf("sim_selection_mode" to "Fixed", "default_sim_slot" to sims.first().slotIndex))
+        if (sims.size > 1) {
+            binding.lykSimAuto.isVisible = true
+            val auto = !fixed || selectedSlot == null
+            binding.lykSimAuto.text = if (auto) getString(R.string.lyk_sim_auto_on) else getString(R.string.lyk_sim_auto)
+            binding.lykSimAuto.setTextColor(ContextCompat.getColor(requireContext(), if (auto) R.color.lyk_lime else R.color.lyk_muted))
+            binding.lykSimAuto.setOnClickListener {
+                messagesSettings.import(mapOf("sim_selection_mode" to "OSDefault", "default_sim_slot" to null))
+                renderSims()
+            }
         }
     }
 
