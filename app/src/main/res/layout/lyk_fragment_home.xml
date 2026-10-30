@@ -333,6 +333,16 @@
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/lykCreds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/archivo_medium"
+                android:textColor="@color/lyk_text"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/lykButtonDisconnect"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

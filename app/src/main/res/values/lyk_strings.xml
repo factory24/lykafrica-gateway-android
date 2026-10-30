@@ -38,5 +38,6 @@
     <string name="lyk_disconnect_confirm">Disconnect from the server? You will need the access code to connect again.</string>
     <string name="lyk_connect_missing">Enter the access code</string>
     <string name="lyk_connect_failed">Could not connect: %1$s</string>
+    <string name="lyk_server_login">Server login for the Lyk Africa backend\nUsername: %1$s\nPassword: %2$s</string>
     <string name="lyk_device_id">Device ID: %1$s</string>
 </resources>

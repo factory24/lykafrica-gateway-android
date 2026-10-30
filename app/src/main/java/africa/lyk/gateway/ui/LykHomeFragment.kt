@@ -158,6 +158,9 @@ class LykHomeFragment : Fragment() {
         binding.lykButtonTest.isEnabled = ok && serviceActive
         binding.lykButtonDisconnect.isVisible = ok
         binding.lykDeviceId.text = gatewaySettings.deviceId?.let { getString(R.string.lyk_device_id, it) } ?: ""
+        binding.lykCreds.text = if (ok && gatewaySettings.username != null)
+            getString(R.string.lyk_server_login, gatewaySettings.username, gatewaySettings.password ?: "—") else ""
+        binding.lykCreds.isVisible = binding.lykCreds.text.isNotEmpty()
         binding.lykDeviceId.setOnClickListener {
             gatewaySettings.deviceId?.let {
                 (requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
@@ -250,7 +253,14 @@ class LykHomeFragment : Fragment() {
         }
         gatewaySettings.deviceName = binding.lykInputName.text?.toString()?.trim()
         try {
-            gatewaySettings.import(mapOf("cloud_url" to getString(R.string.lyk_default_server_url), "private_token" to code))
+            // SSE_ONLY: this build has no Firebase, so registration must not wait for a push token.
+            gatewaySettings.import(
+                mapOf(
+                    "cloud_url" to getString(R.string.lyk_default_server_url),
+                    "private_token" to code,
+                    "notification_channel" to "SSE_ONLY",
+                )
+            )
         } catch (e: Exception) {
             Toast.makeText(requireContext(), getString(R.string.lyk_connect_failed, e.message), Toast.LENGTH_LONG).show()
             return
