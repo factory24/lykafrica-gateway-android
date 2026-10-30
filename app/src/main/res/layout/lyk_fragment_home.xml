@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lyk_ink"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="28dp">
+
+        <!-- Hero: the sun is the status -->
+        <africa.lyk.gateway.ui.DawnView
+            android:id="@+id/lykDawn"
+            android:layout_width="match_parent"
+            android:layout_height="190dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp">
+
+            <TextView
+                android:id="@+id/lykStatusTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/archivo_bold"
+                android:textColor="@color/lyk_text"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/lykStatusSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/archivo_medium"
+                android:textColor="@color/lyk_muted"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lykButtonService"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/archivo_bold"
+                android:textSize="16sp"
+                app:cornerRadius="28dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/lykCardConnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/lyk_surface"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:contentPadding="18dp"
+            app:strokeColor="@color/lyk_line"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/archivo_bold"
+                    android:letterSpacing="0.14"
+                    android:text="@string/lyk_label_connect"
+                    android:textColor="@color/lyk_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/archivo_medium"
+                    android:text="@string/lyk_connect_hint"
+                    android:textColor="@color/lyk_text"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/lyk_phone_name"
+                    android:textColorHint="@color/lyk_muted"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxStrokeColor="@color/lyk_input_stroke"
+                    app:hintTextColor="@color/lyk_lime">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lykInputName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/archivo_medium"
+                        android:maxLines="1"
+                        android:textColor="@color/lyk_text"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/lyk_access_code"
+                    android:textColorHint="@color/lyk_muted"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxStrokeColor="@color/lyk_input_stroke"
+                    app:hintTextColor="@color/lyk_lime"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/lyk_muted">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lykInputCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/archivo_medium"
+                        android:maxLines="1"
+                        android:textColor="@color/lyk_text"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/lykServerLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/archivo_medium"
+                    android:textColor="@color/lyk_muted"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lykButtonConnect"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="@string/lyk_connect_button"
+                    android:stateListAnimator="@null"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/lyk_lime"
+                    android:textColor="@color/lyk_ink"
+                    app:cornerRadius="26dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/lyk_surface"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:contentPadding="18dp"
+            app:strokeColor="@color/lyk_line"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/archivo_bold"
+                    android:letterSpacing="0.14"
+                    android:text="@string/lyk_label_sim"
+                    android:textColor="@color/lyk_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lykSimCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:textColor="@color/lyk_text"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/lykSimTiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/lykSimAuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_medium"
+                    android:padding="4dp"
+                    android:textColor="@color/lyk_muted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/lyk_surface"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:contentPadding="18dp"
+            app:strokeColor="@color/lyk_line"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/archivo_bold"
+                    android:letterSpacing="0.14"
+                    android:text="@string/lyk_label_test"
+                    android:textColor="@color/lyk_muted"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="@string/lyk_test_number"
+                    android:textColorHint="@color/lyk_muted"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxStrokeColor="@color/lyk_input_stroke"
+                    app:hintTextColor="@color/lyk_lime">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lykInputTestNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/archivo_medium"
+                        android:maxLines="1"
+                        android:textColor="@color/lyk_text"
+                        android:inputType="phone" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lykButtonTest"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="@string/lyk_test_button"
+                    android:textColor="@color/lyk_text"
+                    android:textSize="15sp"
+                    app:cornerRadius="26dp"
+                    app:strokeColor="@color/lyk_line" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lykButtonAdvanced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/archivo_bold"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:padding="14dp"
+            android:text="@string/lyk_advanced_show"
+            android:textColor="@color/lyk_muted"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/lykAdvanced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/lykSwitchAutostart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/archivo_medium"
+                android:text="@string/lyk_autostart"
+                android:textColor="@color/lyk_text" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/lykSwitchLocal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/archivo_medium"
+                android:text="@string/lyk_local_server"
+                android:textColor="@color/lyk_text" />
+
+            <TextView
+                android:id="@+id/lykDeviceId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/archivo_medium"
+                android:textColor="@color/lyk_muted"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/lykCreds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/archivo_medium"
+                android:textColor="@color/lyk_text"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lykButtonDisconnect"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/archivo_bold"
+                android:text="@string/lyk_disconnect"
+                android:textColor="@color/lyk_danger"
+                app:cornerRadius="26dp"
+                app:strokeColor="@color/lyk_danger" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

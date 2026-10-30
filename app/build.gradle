@@ -21,6 +21,8 @@ android {
     defaultConfig {
         applicationId brand("GATEWAY_APP_ID", "me.capcom.smsgateway")
         resValue "string", "app_name", brand("GATEWAY_APP_NAME", "SMSGate")
+        // [lyk] Prefilled server on the connect card; the access code is always typed in.
+        resValue "string", "lyk_default_server_url", brand("GATEWAY_SERVER_URL", "https://gateway.lykafrica.com/api/mobile/v1")
         minSdk 21
         targetSdk 33
         versionCode 1

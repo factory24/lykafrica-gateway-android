@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lyk_label_connect">CONNECT THIS PHONE</string>
+    <string name="lyk_label_sim">SENDING SIM</string>
+    <string name="lyk_label_test">TEST</string>
+    <string name="lyk_connect_hint">Enter the access code from your Lyk Africa admin. You only do this once.</string>
+    <string name="lyk_phone_name">Phone name (e.g. Accra office 1)</string>
+    <string name="lyk_access_code">Access code</string>
+    <string name="lyk_connect_button">Connect and start</string>
+    <string name="lyk_server_line">Server: %1$s</string>
+    <string name="lyk_status_not_connected">Not connected</string>
+    <string name="lyk_status_not_connected_sub">Connect this phone to start sending messages.</string>
+    <string name="lyk_status_ready">Ready to send</string>
+    <string name="lyk_status_stopped">Stopped</string>
+    <string name="lyk_status_stopped_sub">Messages are not being sent. Start the service to send.</string>
+    <string name="lyk_status_ready_sub">%1$s · %2$s</string>
+    <string name="lyk_start">Start sending</string>
+    <string name="lyk_stop">Stop</string>
+    <string name="lyk_sim_title">Which SIM sends messages</string>
+    <string name="lyk_sim_none">No SIM found. Insert a SIM and allow phone access.</string>
+    <string name="lyk_sim_count_one">1 SIM found</string>
+    <string name="lyk_sim_count_many">%1$d SIMs found</string>
+    <string name="lyk_sim_permission">Allow phone access to list your SIMs</string>
+    <string name="lyk_sim_auto">Let the phone choose</string>
+    <string name="lyk_sim_auto_on">Automatic is on. Tap a SIM to pin it.</string>
+    <string name="lyk_sim_option">SIM %1$d · %2$s</string>
+    <string name="lyk_test_title">Send a test message</string>
+    <string name="lyk_test_number">Phone number (with country code)</string>
+    <string name="lyk_test_button">Send test</string>
+    <string name="lyk_test_text">Test message from %1$s</string>
+    <string name="lyk_test_queued">Test message queued. See it under Messages.</string>
+    <string name="lyk_test_bad_number">Enter the number with country code, e.g. +233…</string>
+    <string name="lyk_advanced_show">ADVANCED</string>
+    <string name="lyk_advanced_hide">HIDE ADVANCED</string>
+    <string name="lyk_autostart">Start automatically when the phone turns on</string>
+    <string name="lyk_local_server">Also allow sending over this phone\'s local network</string>
+    <string name="lyk_disconnect">Disconnect this phone</string>
+    <string name="lyk_disconnect_confirm">Disconnect from the server? You will need the access code to connect again.</string>
+    <string name="lyk_connect_missing">Enter the access code</string>
+    <string name="lyk_connect_failed">Could not connect: %1$s</string>
+    <string name="lyk_server_login">Server login for the Lyk Africa backend\nUsername: %1$s\nPassword: %2$s</string>
+    <string name="lyk_device_id">Device ID: %1$s</string>
+</resources>
